@@ -1,0 +1,58 @@
+// JavaScript code for "مرح ليبيا - شات"
+
+// Dummy chat messages
+const chatMessages = [
+    "مرحبًا بكم في شات مرح ليبيا!",
+];
+
+// Function to render chat messages
+function renderMessages() {
+    const messagesContainer = document.querySelector('.chat-messages');
+    messagesContainer.innerHTML = '';
+    chatMessages.forEach((message) => {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messagesContainer.appendChild(messageElement);
+    });
+    messagesContainer.scrollTop = messagesContainer.scrollHeight; // Auto-scroll to the latest message
+}
+
+// Function to handle message sending
+function handleSendMessage() {
+    const messageInput = document.querySelector('.chat-input input');
+    const messageText = messageInput.value.trim();
+    if (messageText) {
+        chatMessages.push(messageText);
+        renderMessages();
+        messageInput.value = '';
+    }
+}
+
+// Function to initialize room list click events
+function setupRoomList() {
+    const roomItems = document.querySelectorAll('.room-list ul li');
+    roomItems.forEach((item) => {
+        item.addEventListener('click', () => {
+            alert(`تم الدخول إلى ${item.textContent}`);
+        });
+    });
+}
+
+// Initialize chat functionality
+function initializeChat() {
+    const sendButton = document.querySelector('.chat-input button');
+    sendButton.addEventListener('click', handleSendMessage);
+
+    const messageInput = document.querySelector('.chat-input input');
+    messageInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            handleSendMessage();
+        }
+    });
+
+    setupRoomList();
+    renderMessages();
+}
+
+// Run initialization when the DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeChat);
